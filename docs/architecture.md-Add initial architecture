@@ -1,0 +1,13 @@
+
+# Secret Intelligence architecture
+## Objective
+Build an intelligent  secret detection and risk intelligence engine.
+## Detection Pipeline
+Repository
+File Enamulator
+Pre Validator
+Matcher
+Post Validator
+Alert Engine
+Risk Intelligence
+Leadership Dashboard
