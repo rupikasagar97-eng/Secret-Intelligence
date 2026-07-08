@@ -1,58 +1,58 @@
 [
     {
-        "case_id": "SEC-DC06B498",
+        "case_id": "SEC-9A285200",
         "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
-        "type": "Stripe",
-        "file_path": "./.npm/_logs/2026-02-01T16_45_39_691Z-debug-0.log",
-        "risk_score": "HIGH"
-    },
-    {
-        "case_id": "SEC-5460841D",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
-        "type": "GitHub",
-        "file_path": "./.ipynb_checkpoints/README-checkpoint.ipynb",
-        "risk_score": "HIGH"
-    },
-    {
-        "case_id": "SEC-8D50B945",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
+        "timestamp": "2026-07-08 15:54:05",
         "type": "BIP39",
-        "file_path": "./.ipynb_checkpoints/Untitled-checkpoint.ipynb",
+        "file_path": "./.local/bin/flask",
         "risk_score": "HIGH"
     },
     {
-        "case_id": "SEC-4443F989",
+        "case_id": "SEC-687FEA14",
         "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
-        "type": "Slack",
-        "file_path": "./.cache/fontconfig/7ef2298fde41cc6eeb7af42e48b7d293-le64.cache-8",
-        "risk_score": "HIGH"
-    },
-    {
-        "case_id": "SEC-223F624D",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
-        "type": "JWT",
-        "file_path": "./.cache/fontconfig/0bd3dc0958fa2205aaaa8ebb13e2872b-le64.cache-8",
-        "risk_score": "HIGH"
-    },
-    {
-        "case_id": "SEC-D7873C66",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
+        "timestamp": "2026-07-08 15:54:05",
         "type": "PrivateKey",
-        "file_path": "./.cache/fontconfig/c19b55eb3b4c5b40ea175e31682068a5-le64.cache-8",
+        "file_path": "./.ipynb_checkpoints/Untitled3-checkpoint.ipynb",
         "risk_score": "CRITICAL"
     },
     {
-        "case_id": "SEC-AC78DF85",
+        "case_id": "SEC-108DC605",
         "status": "OPEN",
-        "timestamp": "2026-07-08 15:33:54",
+        "timestamp": "2026-07-08 15:54:05",
+        "type": "Slack",
+        "file_path": "./.cache/fontconfig/6333f38776742d18e214673cd2c24e34-le64.cache-8",
+        "risk_score": "HIGH"
+    },
+    {
+        "case_id": "SEC-D44AB8C8",
+        "status": "OPEN",
+        "timestamp": "2026-07-08 15:54:05",
+        "type": "Stripe",
+        "file_path": "./.cache/fontconfig/c855463f699352c367813e37f3f70ea7-le64.cache-8",
+        "risk_score": "HIGH"
+    },
+    {
+        "case_id": "SEC-70BE01CD",
+        "status": "OPEN",
+        "timestamp": "2026-07-08 15:54:05",
+        "type": "GitHub",
+        "file_path": "./.cache/fontconfig/e7de81b01590fb7e12b38e274e17d0db-le64.cache-8",
+        "risk_score": "HIGH"
+    },
+    {
+        "case_id": "SEC-2CD6950E",
+        "status": "OPEN",
+        "timestamp": "2026-07-08 15:54:05",
         "type": "AWS",
-        "file_path": "./.git/objects/7a/9501902fb72c6556b659b5a0416deda4fddc56",
+        "file_path": "./.cache/fontconfig/406a1d2d2bf3ed7664fbadefac0b2f66-le64.cache-8",
+        "risk_score": "HIGH"
+    },
+    {
+        "case_id": "SEC-E7E9F103",
+        "status": "OPEN",
+        "timestamp": "2026-07-08 15:54:05",
+        "type": "JWT",
+        "file_path": "./.cache/fontconfig/d82eb4fd963d448e2fcb7d7b793b5df3-le64.cache-8",
         "risk_score": "HIGH"
     }
 ]
