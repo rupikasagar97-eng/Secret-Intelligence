@@ -18,5 +18,8 @@ Raw Filesystem -> Deterministic Regex Matchers -> Post-Validator -> Case Token N
 The scanner converts raw match anomalies into a uniform Review Token Schema containing case_id, status, timestamp, type, file_path, and risk_score.
 
 ## Future Roadmap
-- Phase 2: Integration with a declarative AI Risk Intelligence Agent to perform downstream context-aware impact analysis.
-- Phase 3: Executive Dashboards for real-time risk reporting to enterprise leadership.
+## Future Roadmap
+
+* **Phase 2:** Integration with a declarative AI Risk Intelligence Agent to perform downstream context-aware impact analysis.
+* **Phase 3 (Production Scaling):** Refactor the core scanning logic into a standalone Python service containerized via Docker for distributed deployment.
+* **Phase 4 (CI/CD Automation):** Integrate the pipeline into automated GitHub Actions to intercept and block credential-bearing commits pre-merge.
