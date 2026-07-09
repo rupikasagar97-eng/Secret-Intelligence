@@ -18,8 +18,8 @@ Raw Filesystem -> Deterministic Regex Matchers -> Post-Validator -> Case Token N
 The scanner converts raw match anomalies into a uniform Review Token Schema containing case_id, status, timestamp, type, file_path, and risk_score.
 
 ## Future Roadmap
-## Future Roadmap
 
-* **Phase 1:(Completed) Integration with a declarative AI Risk Intelligence Agent to perform downstream context-aware impact analysis.
-* **Phase 2 (Production Scaling):** Refactor the core scanning logic into a standalone Python service containerized via Docker for distributed deployment.
-* **Phase 3 (CI/CD Automation):** Integrate the pipeline into automated GitHub Actions to intercept and block credential-bearing commits pre-merge.
+* **Phase 1 (Completed):** Core deterministic signature scanner engine and interactive Executive Threat Dashboard.
+* **Phase 2 (In Development):** Integrate an isolated LLM Risk Intelligence Agent to perform dynamic, context-aware risk analysis.
+* **Phase 3 (Production Scaling):** Refactor logic into a standalone Python service containerized via Docker for distributed deployments.
+* **Phase 4 (CI/CD Automation):** Set up a automated GitHub Actions workflow to serve as a pre-merge pipeline security gate.
