@@ -1,6 +1,5 @@
 name: Secret Intelligence & Iris Security Pipeline
 
-# Trigger the conveyor belt on every push to the main branch
 on:
   push:
     branches: [ "main" ]
@@ -12,28 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Step 1: Pull down the repository files onto the automated server
     - name: Checkout Code Repository
       uses: actions/checkout@v4
 
-    # Step 2: Initialize a clean, isolated Python 3.11 environment
-    - - name: Set up Python 3.11
+    - name: Set up Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: "3.11"
 
-    # Step 3: Install the backend library dependencies
     - name: Install Pipeline Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Step 4: Run a compilation check on the Iris Engine code
     - name: Verify Iris Microservice Compiles Successfully
       run: |
         python -m py_compile iris_engine.py
 
-    # Step 5: Simulate the Docker Sandbox image building process
     - name: Validate Container Sandbox Integrity
       run: |
         echo "🐳 Simulating production environment initialization..."
