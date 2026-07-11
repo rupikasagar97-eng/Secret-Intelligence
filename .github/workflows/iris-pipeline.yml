@@ -26,4 +26,4 @@ jobs:
       run: python -m py_compile iris_engine.py
 
     - name: Run Live Test Execution
-      run: python iris_engine.py --key "sk_test_51IrisEngineMockSecurityToken2026Xyz999"
+      run: python iris_engine.py --key "${{ secrets.STRIPE_LIVE_KEY }}"
