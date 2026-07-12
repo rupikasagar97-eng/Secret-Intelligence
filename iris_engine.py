@@ -4,7 +4,7 @@ import sys
 
 def print_banner():
     print("=" * 65)
-    print("        IRIS RISK INTELLIGENCE ENGINE v2.0.0 (DYNAMIC)        ")
+    print("        IRIS RISK INTELLIGENCE ENGINE v2.1.0 (PROD)        ")
     print("   Automated Credential Tracking & Exposure Mitigation System")
     print("=" * 65)
 
@@ -16,6 +16,39 @@ def analyze_credential(token):
 
     print(f"[*] Initializing Iris cryptographic signature scanner...")
     print(f"[*] Scanning token payload structure...")
+
+    # 🛡️ SYSTEM ARCHITECTURE: FALSE POSITIVE SUPPRESSION GATE
+    is_false_positive = False
+    suppression_reason = ""
+
+    # Rule 1: Too short to be a real cryptographic secret
+    if len(token) < 12:
+        is_false_positive = True
+        suppression_reason = f"String length ({len(token)} chars) is below cryptographic threshold."
+    
+    # Rule 2: Common non-secret developer words / placeholders
+    elif token.lower() in ["hello", "test", "null", "undefined", "password", "placeholder", "my_key"]:
+        is_false_positive = True
+        suppression_reason = "Payload matches known benign/placeholder dictionary word."
+        
+    # Rule 3: Extremely low entropy (repeating characters or basic alphabetical sequences)
+    elif re.match(r"^(.)\1+$", token) or token.lower() in "abcdefghijklmnopqrstuvwxyz1234567890":
+        is_false_positive = True
+        suppression_reason = "Pattern exhibits extremely low entropy (repeating or sequential keys)."
+
+    # If flagged as a false positive, suppress the alert and exit safely!
+    if is_false_positive:
+        print("\n" + "-" * 65)
+        print(" ℹ️  IRIS FALSE POSITIVE SUPPRESSION GATE TRIGGERED")
+        print("-" * 65)
+        print(f"[🛡️] Analyzed Payload: {token}")
+        print(f"[🔍] Analysis Result : Flagged as BENIGN / FALSE POSITIVE")
+        print(f"[📝] Filter Reason   : {suppression_reason}")
+        print("-" * 65)
+        print("[✅] ACTION TAKEN     : Alert Suppressed. Codebase cleared.")
+        print("[✅] TOTAL FINANCIAL RISK EXPOSURE: $0.00")
+        print("=" * 65)
+        return
 
     # 🔬 High-Intelligence Signature Registry (Regex Rechecks)
     SIGNATURES = [
@@ -50,7 +83,7 @@ def analyze_credential(token):
             matched_signature = sig
             break
 
-    # Heuristic Fallback Engine: If it's a custom/mock string not in the signature list, catch it anyway!
+    # Heuristic Fallback Engine: High-entropy string that passed the FP filter but isn't in registry
     if not matched_signature:
         matched_signature = {
             "id": "HEURISTIC_CHALLENGE",
