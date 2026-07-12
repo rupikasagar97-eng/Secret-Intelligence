@@ -1,29 +1,28 @@
-name: Iris Security Pipeline
+name: Iris Pipeline Execution
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
+  # 🎛️ This adds the interactive "Run Workflow" button in GitHub Actions
+  workflow_dispatch:
+    inputs:
+      test_key:
+        description: 'Enter any key to test (Stripe, AWS, or custom mock string)'
+        required: true
+        default: 'sk_live_mock_test_key_value_12345'
 
 jobs:
   verify-and-build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Code Repository
+    - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set up Python 3.11
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.11"
-
-    - name: Install Pipeline Dependencies
-      run: pip install -r requirements.txt
-
-    - name: Verify Iris Microservice Compiles Successfully
-      run: python -m py_compile iris_engine.py
+        python-version: '3.11'
 
     - name: Run Live Test Execution
-      run: python iris_engine.py --key "${{ secrets.STRIPE_LIVE_KEY }}"
+      # This grabs whatever you typed in the input box, or defaults to the Stripe mock key
+      run: python iris_engine.py --key "${{ github.event.inputs.test_key }}"
