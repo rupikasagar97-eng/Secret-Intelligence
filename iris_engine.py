@@ -130,7 +130,7 @@ def analyze_credential(token):
     print("-" * 65)
     print(" INDIVIDUAL FORENSIC REAL-TIME ISOLATION METRICS:")
     print("-" * 65)
-    print(f" ↳ Prevented Nightmare Vector: {matched_signature['vector'] Bluntly}")
+    print(f" ↳ Prevented Nightmare Vector: {matched_signature['vector']}")
     print(f" ↳ Calculated Risk Capital Recovered: {matched_signature['risk_value']}")
     print("-" * 65)
     print("[STATUS] SUCCESS: Portfolio scan finalized. Threat vectors zeroed out.")
