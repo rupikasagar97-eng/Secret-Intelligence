@@ -1,10 +1,11 @@
 import argparse
 import re
 import sys
+import hashlib
 
 def print_banner():
     print("=" * 65)
-    print("     IRIS RISK INTELLIGENCE ENGINE v2.3.0 (FORENSIC PROD)     ")
+    print("     IRIS RISK INTELLIGENCE ENGINE v2.4.0 (SOC PROD)      ")
     print("   Automated Credential Tracking & Exposure Mitigation System")
     print("=" * 65)
 
@@ -46,6 +47,7 @@ def analyze_credential(token):
         print(f"[📝] Filter Reason   : {suppression_reason}")
         print("-" * 65)
         print("[✅] ACTION TAKEN     : Alert Suppressed. Build pipeline cleared.")
+        print("[✅] Incident Case ID : N/A (Auto-Suppressed)")
         print("[✅] Calculated Risk Capital Recovered: $0.00")
         print("=" * 65)
         return
@@ -121,10 +123,16 @@ def analyze_credential(token):
             "risk_value": "$95,000.00"
         }
 
+    # 🎫 SOC OPERATIONAL LAYER: GENERATE UNIQUE INCIDENT CASE ID
+    # Creates a deterministic unique hex tracking ID based on the token
+    token_hash = hashlib.sha256(token_clean.encode()).hexdigest().upper()
+    case_id = f"IRIS-INC-2026-{token_hash[:6]}"
+
     # 📊 Generate the Substantial Forensic Terminal Frame matching your documentation
     print("\n" + "!" * 65)
     print(f" 🔥 CONTAINED -> Asset Class: [{matched_signature['name']}]")
     print("!" * 65)
+    print(f" ↳ Incident Case ID : {case_id}  ⚠️ [STATUS: ACTION REQUIRED]")
     print(f" ↳ Match Mechanism  : Regex Pattern Recheck Engine")
     print(f" ↳ Redacted Payload : {token_clean[:12]}********************")
     print("-" * 65)
@@ -133,7 +141,8 @@ def analyze_credential(token):
     print(f" ↳ Prevented Nightmare Vector: {matched_signature['vector']}")
     print(f" ↳ Calculated Risk Capital Recovered: {matched_signature['risk_value']}")
     print("-" * 65)
-    print("[STATUS] SUCCESS: Portfolio scan finalized. Threat vectors zeroed out.")
+    print(f"[REMEDIATION REQUIRED]: Please instruct the token owner to IMMEDIATELY roll/rotate")
+    print(f"                       this credential and invalidate Case ID {case_id}.")
     print("=" * 65)
 
 if __name__ == "__main__":
