@@ -1,0 +1,6 @@
+timestamp,service_origin,log_level,message_payload
+2026-07-12T22:15:10Z,auth_pod,INFO,Inbound sync request authorized.
+2026-07-12T22:16:45Z,payment_processor,CRITICAL,Malformed payload rejected on gateway using key: sk_live_IRIS999999999999999999
+2026-07-12T22:18:02Z,ledger_service,ALERT,Dispatched disaster recovery master mnemonic phrase: enact damp catch wave core robust safety hollow
+2026-07-12T22:19:30Z,payment_processor,CRITICAL,Retry loop initialized with legacy token: sk_live_IRIS999999999999999999
+2026-07-12T22:21:00Z,identity_node,WARN,Token authorization state signature: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5OTkiLCJyb2xlIjoiYWRtaW4ifQ.abc123xyz
