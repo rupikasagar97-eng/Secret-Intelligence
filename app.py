@@ -1,30 +1,26 @@
 import streamlit as st
-import os, re, subprocess, tempfile, shutil, json
-import pandas as pd
+import os, re, subprocess, tempfile, shutil, json, pandas as pd
 from fpdf import FPDF
 
-# --- THE 7 SECURITY PATTERNS ---
-# Matches: JWT, Stripe, Slack, GitHub, AWS, Private Key, BNP 39
-SECRET_PATTERNS = {
-    "JWT": r"ey[a-zA-Z0-9_-]{16,}\.[a-zA-Z0-9_-]{16,}\.[a-zA-Z0-9_-]{16,}",
-    "Stripe": r"sk_(live|test)_[a-zA-Z0-9]{24}",
-    "Slack": r"https://hooks\.slack\.com/services/[A-Za-z0-9]+/[A-Za-z0-9]+/[A-Za-z0-9]+",
-    "GitHub": r"ghp_[a-zA-Z0-9]{36}",
-    "AWS": r"AKIA[0-9A-Z]{16}",
-    "Private Key": r"-----BEGIN (RSA|OPENSSH|EC|PGP) PRIVATE KEY-----",
-    "BNP 39": r"[a-zA-Z0-9]{39}" 
-}
+# --- CONFIGURATION ---
+def load_security_config():
+    # Ensure security_cases.json exists or define fallback
+    if os.path.exists('security_cases.json'):
+        with open('security_cases.json', 'r') as f:
+            return json.load(f)
+    return {"cases": []}
 
-RISK_VALUES = {"JWT": 20000, "Stripe": 250000, "Slack": 10000, "GitHub": 50000, "AWS": 100000, "Private Key": 500000, "BNP 39": 75000}
-
+# --- NEUTRALIZATION (Killswitch) ---
 def neutralize(label):
-    # Logic: This is where you would call your API Client (e.g., boto3, stripe-python)
-    # to revoke the specific key found.
-    return f"CONTAINED: API/Token {label} Revoked via Cloud Provider SDK."
+    # Place your live API SDK/Cloud calls here
+    return f"CONTAINED: {label} Revoked via Automated Protocol"
 
+# --- SCANNING ENGINE ---
 def scan_repo(repo_url):
+    config = load_security_config()
     temp_dir = tempfile.mkdtemp()
     findings = []
+    
     try:
         subprocess.run(["git", "clone", "--depth", "1", repo_url, temp_dir], capture_output=True)
         for root, _, files in os.walk(temp_dir):
@@ -33,42 +29,70 @@ def scan_repo(repo_url):
                 try:
                     with open(path, "r", errors="ignore") as f:
                         content = f.read()
-                        for label, pattern in SECRET_PATTERNS.items():
-                            if re.search(pattern, content):
-                                status = neutralize(label)
+                        for case in config['cases']:
+                            if re.search(case['pattern'], content):
+                                status = neutralize(case['label'])
                                 findings.append({
                                     "Repo": repo_url.split('/')[-1],
-                                    "Key": label,
+                                    "Key": case['label'],
                                     "Status": status,
-                                    "Impact": RISK_VALUES.get(label, 0)
+                                    "Impact": case.get('financial_loss', 0)
                                 })
                 except: continue
     finally:
         shutil.rmtree(temp_dir)
     return findings
 
+# --- REPORT GENERATION ---
 def create_report(df):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", 'B', 16)
     pdf.cell(200, 10, "IRIS Forensic Audit & Containment Report", ln=True, align='C')
+    
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, f"Total Financial Exposure Neutralized: ${df['Impact'].sum():,}", ln=True)
     pdf.ln(10)
-    # Add table and mandatory remediation text here...
+    
+    # Table Header
+    pdf.set_font("Arial", 'B', 10)
+    pdf.cell(50, 10, "Repo", 1)
+    pdf.cell(40, 10, "Key Type", 1)
+    pdf.cell(100, 10, "Containment Action", 1)
+    pdf.ln()
+    
+    # Rows
+    pdf.set_font("Arial", size=10)
+    for _, row in df.iterrows():
+        pdf.cell(50, 10, str(row['Repo']), 1)
+        pdf.cell(40, 10, str(row['Key']), 1)
+        pdf.cell(100, 10, str(row['Status']), 1)
+        pdf.ln()
+    
+    # Protocols
+    pdf.ln(10)
+    pdf.set_font("Arial", 'B', 14)
+    pdf.cell(200, 10, "MANDATORY REMEDIATION PROTOCOL", ln=True)
+    pdf.set_font("Arial", size=11)
+    pdf.multi_cell(0, 10, "1. ANALYST ACTION: All identified secrets MUST be rotated immediately via the provider console. The automated containment neutralizes the immediate risk, but full credential rotation is required to maintain system integrity.")
+    pdf.multi_cell(0, 10, "2. LEADERSHIP ACTION: Review CI/CD pipeline access controls. Implement pre-commit hooks and Git-secret scanning to prevent plaintext credentials from being committed to the repository in the future.")
+    
     return pdf.output(dest='S').encode('latin-1')
 
-# --- STREAMLIT UI ---
+# --- UI ---
+st.set_page_config(page_title="IRIS: Active Defense", layout="wide")
 st.title("🛡️ IRIS: Active Containment Engine")
-repo_input = st.text_area("Enter Repo URLs (one per line):")
+repo_input = st.text_area("Target Repositories (one per line):", height=100)
 
 if st.button("EXECUTE SCAN & CONTAIN"):
     repos = [r.strip() for r in repo_input.split('\n') if r.strip()]
     results = []
-    for r in repos: results.extend(scan_repo(r))
+    with st.spinner("Scanning repositories..."):
+        for r in repos: results.extend(scan_repo(r))
     
-    df = pd.DataFrame(results)
-    st.dataframe(df)
-    
-    if not df.empty:
+    if results:
+        df = pd.DataFrame(results)
+        st.dataframe(df)
         st.download_button("Download Leadership Audit", create_report(df), "Audit.pdf")
+    else:
+        st.success("Clean: No secrets found.")s

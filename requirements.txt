@@ -5,3 +5,4 @@ pygments
 markdown-it-py
 mdurl
 openpyxl
+fpdf
