@@ -1,0 +1,25 @@
+name: Real-Time Cyber Threat Pipeline Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code Baseline
+      uses: actions/checkout@v4
+
+    - name: Initialize Enterprise Python Runtime
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Run Secret Intelligence Stream Scan
+      run: |
+        # Automatically loop through and scan all python, env, and config files in the commit
+        python main.py --file security.env
