@@ -1,58 +1,39 @@
-[
+{
+  "cases": [
     {
-        "case_id": "SEC-9A285200",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "BIP39",
-        "file_path": "./.local/bin/flask",
-        "risk_score": "HIGH"
+      "label": "BIP39",
+      "pattern": "\\b([a-z]{4,8}\\s){11,23}[a-z]{4,8}\\b",
+      "financial_loss": 50000
     },
     {
-        "case_id": "SEC-687FEA14",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "PrivateKey",
-        "file_path": "./.ipynb_checkpoints/Untitled3-checkpoint.ipynb",
-        "risk_score": "CRITICAL"
+      "label": "PrivateKey",
+      "pattern": "-----BEGIN .* PRIVATE KEY-----",
+      "financial_loss": 100000
     },
     {
-        "case_id": "SEC-108DC605",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "Slack",
-        "file_path": "./.cache/fontconfig/6333f38776742d18e214673cd2c24e34-le64.cache-8",
-        "risk_score": "HIGH"
+      "label": "Slack",
+      "pattern": "xox[baprs]-[0-9a-zA-Z]{10,48}",
+      "financial_loss": 20000
     },
     {
-        "case_id": "SEC-D44AB8C8",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "Stripe",
-        "file_path": "./.cache/fontconfig/c855463f699352c367813e37f3f70ea7-le64.cache-8",
-        "risk_score": "HIGH"
+      "label": "Stripe",
+      "pattern": "sk_(live|test)_[0-9a-zA-Z]{24}",
+      "financial_loss": 50000
     },
     {
-        "case_id": "SEC-70BE01CD",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "GitHub",
-        "file_path": "./.cache/fontconfig/e7de81b01590fb7e12b38e274e17d0db-le64.cache-8",
-        "risk_score": "HIGH"
+      "label": "GitHub",
+      "pattern": "(ghp|gho|ghu|ghs|ghr)_[a-zA-Z0-9]{36}",
+      "financial_loss": 30000
     },
     {
-        "case_id": "SEC-2CD6950E",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "AWS",
-        "file_path": "./.cache/fontconfig/406a1d2d2bf3ed7664fbadefac0b2f66-le64.cache-8",
-        "risk_score": "HIGH"
+      "label": "AWS",
+      "pattern": "AKIA[0-9A-Z]{16}",
+      "financial_loss": 100000
     },
     {
-        "case_id": "SEC-E7E9F103",
-        "status": "OPEN",
-        "timestamp": "2026-07-08 15:54:05",
-        "type": "JWT",
-        "file_path": "./.cache/fontconfig/d82eb4fd963d448e2fcb7d7b793b5df3-le64.cache-8",
-        "risk_score": "HIGH"
+      "label": "JWT",
+      "pattern": "eyJ[a-zA-Z0-9_-]+\\.eyJ[a-zA-Z0-9_-]+",
+      "financial_loss": 20000
     }
-]
+  ]
+}
