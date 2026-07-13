@@ -1,4 +1,3 @@
-cat << 'EOF' > app.py
 import streamlit as st
 import subprocess
 import os
@@ -28,13 +27,11 @@ with tab1:
         if not repo_url:
             st.error("Please provide a valid GitHub repository URL.")
         else:
-            # Generate a completely unique folder name to avoid collisions
             unique_id = str(uuid.uuid4())[:8]
             target_clone_dir = f"scan_target_{unique_id}"
             
             with st.spinner("Cloning repository branches and preparing stream-parser..."):
                 try:
-                    # 1. Clone the repo with depth=1 (blazing fast, no massive history download)
                     clone_res = subprocess.run(
                         ["git", "clone", "--depth", "1", repo_url, target_clone_dir],
                         capture_output=True, text=True
@@ -46,13 +43,11 @@ with tab1:
                     else:
                         st.success("Repository successfully mapped into analysis sandbox! Scanning all assets...")
                         
-                        # 2. Iterate through every single file in the repo
                         combined_report = ""
                         files_scanned = 0
                         secrets_found = 0
                         
                         for root, dirs, files in os.walk(target_clone_dir):
-                            # Skip the internal .git metadata folder
                             if ".git" in root:
                                 continue
                                 
@@ -60,21 +55,17 @@ with tab1:
                                 file_path = os.path.join(root, file)
                                 files_scanned += 1
                                 
-                                # Run main.py scanner against this specific file
                                 scan_res = subprocess.run(
                                     ["python", "main.py", "--file", file_path],
                                     capture_output=True, text=True
                                 )
                                 
-                                # If the output contains alerts, track it
                                 if "[ALERT]" in scan_res.stdout:
-                                    # Clean up paths to make the readout beautiful for recruiters
                                     clean_path = file_path.replace(f"{target_clone_dir}/", "")
                                     readable_output = scan_res.stdout.replace(file_path, clean_path)
                                     combined_report += readable_output + "\n"
                                     secrets_found += 1
                         
-                        # 3. Present the data beautifully to the recruiter
                         st.divider()
                         col1, col2 = st.columns(2)
                         col1.metric("Total Files Analyzed", files_scanned)
@@ -90,7 +81,6 @@ with tab1:
                 except Exception as e:
                     st.error(f"An unexpected exception occurred: {str(e)}")
                 finally:
-                    # 4. Securely destroy the cloned repository folder after processing
                     if os.path.exists(target_clone_dir):
                         shutil.rmtree(target_clone_dir)
 
@@ -123,4 +113,3 @@ with tab2:
                 finally:
                     if os.path.exists(temp_filename):
                         os.remove(temp_filename)
-EOF
