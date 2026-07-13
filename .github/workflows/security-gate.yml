@@ -21,5 +21,4 @@ jobs:
 
     - name: Run Secret Intelligence Stream Scan
       run: |
-        # Automatically loop through and scan all python, env, and config files in the commit
-        python main.py --file security.env
+        python iris_engine.py --file security.env
