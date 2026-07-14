@@ -1,7 +1,7 @@
 IRIS: Intelligent Repository Intelligence & Secret-detection System
 An automated credential exposure detection and risk quantification engine — built to operationalize early-stage fraud prevention at the infrastructure layer.
 
-Live Demo: https://hello-who--rupikasagar97.replit.app
+Live Demo: https://hello-who--rupikasagar97.replit.app/
 
 What This Is
 Exposed API keys are one of the most common and costly vectors for payment fraud. When a Stripe secret key, AWS credential, or JWT is committed to a public repository, it can be harvested by automated scanners within minutes — enabling unauthorized charges, account takeovers, and large-scale financial loss.
